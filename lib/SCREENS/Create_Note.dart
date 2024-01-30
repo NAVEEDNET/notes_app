@@ -4,7 +4,7 @@ import 'package:note_app/MODELS/Note_Model.dart';
 class CreateNote extends StatefulWidget {
   const CreateNote({Key? key, required this.onNewNoteCreated});
 
-  final Function(note) onNewNoteCreated;
+  final Function(notea) onNewNoteCreated;
 
   @override
   State<CreateNote> createState() => _CreateNoteState();
@@ -50,13 +50,15 @@ class _CreateNoteState extends State<CreateNote> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (titleController.text.isEmpty){
-            return ;
+          if (titleController.text.isEmpty || bodyController.text.isEmpty) {
+            return;
           }
-          if (bodyController.text.isEmpty){
-            return ;
-          }
-
+          final note = notea(
+            body: bodyController.text,
+            title: titleController.text,
+          );
+          widget.onNewNoteCreated(note);
+          Navigator.of(context).pop();
         },
         child: const Icon(Icons.save),
       ),
